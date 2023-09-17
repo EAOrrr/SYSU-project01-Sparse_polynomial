@@ -2,8 +2,8 @@
 
 /* Implemantaion for Polynomial*/
 /* Constructor */
-Polynomial::Polynomial(){}
-Polynomial::Polynomial(Node*head, size_t size):LinkedList(head, size){}
+Polynomial::Polynomial():LinkedList(nullptr, 0, 0) {}
+Polynomial::Polynomial(Node* head, size_t size):LinkedList(head, 0, size){}
 Polynomial::Polynomial(const Polynomial& other):LinkedList(other){}
 Polynomial::Polynomial(Polynomial&& other):LinkedList(other){}
 
@@ -12,7 +12,7 @@ void Polynomial::insert(int key, int value){
     if(key < 0){
         throw std::runtime_error("Invalid Key:"+std::to_string(key));
     }
-    LinkedList::insert(key, value, 0);
+    LinkedList::insert(key, value);
 }
 
 Polynomial Polynomial::operator+(const Polynomial& other){

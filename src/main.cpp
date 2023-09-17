@@ -20,8 +20,15 @@ int main(){
         //     n2 = n2->next;
         // }
         link.printPoly();
+        // auto n = link.index(3);
+        
+        // n->value = 4;
+        // n->key = 2;
+        // if(n == nullptr)
+        //     link.printPoly();
         link2.printPoly();
         Polynomial lk = link*link2;
+
         lk.insert(0, 3);
         lk.printPoly();
         lk.derive();

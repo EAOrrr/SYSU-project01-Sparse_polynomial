@@ -8,7 +8,7 @@ Node::Node(Node&& other):key(other.key), value(other.value){}
 /* Implementation for class LinkedList */
 // default constructor
 LinkedList::LinkedList():head(nullptr), size(0){}
-LinkedList::LinkedList(Node* head, size_t size):head(head), size(size){
+LinkedList::LinkedList(Node* head, int valToRemove, size_t size):head(head), size(size), valToRemove(valToRemove){
     if(size == 0){
         Node* curr = head;
         while(curr != nullptr){
@@ -21,11 +21,12 @@ LinkedList::LinkedList(Node* head, size_t size):head(head), size(size){
 LinkedList::LinkedList(const LinkedList& other){
     size = 0;
     head = nullptr;
+    valToRemove = other.valToRemove;
 
     if(other.head != nullptr){
         Node* curr = other.head;
         while(curr != nullptr){
-            insert(curr->key, curr->value, -65536, true);
+            insert(curr->key, curr->value);
             curr = curr->next;
         }
     }
@@ -35,6 +36,7 @@ LinkedList::LinkedList(const LinkedList& other){
 LinkedList::LinkedList(LinkedList&& other){
     size = other.size;
     head = std::exchange(other.head, nullptr);
+    valToRemove = other.valToRemove;
 }
 LinkedList LinkedList::operator=(LinkedList&& other){
     size = other.size;
@@ -68,8 +70,7 @@ size_t LinkedList::length() const{
 }
 
 // LinkedList Operation
-void LinkedList::insert(int key, int value, 
-    int valToRemove, bool autoDealWithConflict){
+void LinkedList::insert(int key, int value){
     if(value == valToRemove){
         return;
     }
@@ -81,7 +82,6 @@ void LinkedList::insert(int key, int value,
             Node* newNode = new Node(key, value, head);
             head = newNode;
         }else if(key == head->key){
-            if(autoDealWithConflict){
                 head->value = value + head->value;
                 size--;
                 if(head->value == valToRemove){
@@ -89,9 +89,6 @@ void LinkedList::insert(int key, int value,
                     head = head->next;
                     delete(temp);
                     size--;
-                }else{
-                   throw std::runtime_error("Duplicate key");
-                }
             }
         }
         else{
@@ -100,7 +97,6 @@ void LinkedList::insert(int key, int value,
                 curr = curr->next;
             }
             if(curr->next && curr->next->key == key){
-                if(autoDealWithConflict){
                     curr->next->value = curr->next->value + value;
                     size--;
                     if(curr->next->value == valToRemove){
@@ -109,9 +105,6 @@ void LinkedList::insert(int key, int value,
                         delete(temp);
                         size--;
                     }
-                }else{
-                    throw std::runtime_error("Duplicate Key");
-                }
             }else{
                 Node* newNode = new Node(key, value, curr->next);
                 curr -> next = newNode; 
