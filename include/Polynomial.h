@@ -10,15 +10,17 @@ class Polynomial:public LinkedList{
         Polynomial(Node* head, size_t size=0);
         Polynomial(const Polynomial& other);
         Polynomial(Polynomial&& other);
-        void insert(int key, int value);
+        void insert(int key, double value);
+        Polynomial operator=(const Polynomial& other);
+        Polynomial operator=(Polynomial&& other);
         Polynomial operator+(const Polynomial& other);
         Polynomial operator-(const Polynomial& other);
         Polynomial operator+=(const Polynomial& other);
         Polynomial operator-=(const Polynomial& other);
         Polynomial operator*(const Polynomial& other);
         Polynomial operator*=(const Polynomial& other);
-        int compute(int x) const;
+        double compute(double x) const;
         void derive();
-        void printPoly() const;
+        void printPoly(std::ostream& os) const;
 };
 #endif

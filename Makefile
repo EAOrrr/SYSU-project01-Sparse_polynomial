@@ -14,8 +14,7 @@ all:$(BIN)/${EXECUTABLE}
 
 
 run: clean all
-	clear
-	./$(BIN)/$(EXECUTABLE)
+	valgrind ./$(BIN)/$(EXECUTABLE)
 
 ${BIN}/${EXECUTABLE}:${SRC}/*.cpp ${INCLUDE}/*.h
 	$(CXX) $(CXX_FLAGS) ${SRC}/*.cpp -I$(INCLUDE) -o $@ $(LIBRARIES)
